@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RKF45 Calculator</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <style>
+
+        *{
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body{
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            min-height: 100vh;
+            padding: 30px;
+            color: white;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 10px 20px;
+            margin-bottom: 40px;
+        }
+
+        .nav-link{
+            color: white !important;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover{
+            color: #60a5fa !important;
+            transform: translateY(-2px);
+        }
+
+        .navbar-brand{
+            font-size: 24px;
+        }
+
+        /* CALCULATOR CARD */
+
+        .calculator-card{
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+        }
+
+        .title{
+            font-size: 42px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle{
+            text-align: center;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+        }
+
+        .equation-box{
+            background: rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 22px;
+        }
+
+        .form-label{
+            font-weight: 600;
+        }
+
+        .form-control{
+            background: rgba(255,255,255,0.12);
+            border: none;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+        }
+
+        .form-control::placeholder{
+            color: #cbd5e1;
+        }
+
+        .form-control:focus{
+            background: rgba(255,255,255,0.18);
+            color: white;
+            box-shadow: 0 0 0 0.2rem rgba(59,130,246,.25);
+        }
+
+        .btn-calculate{
+            background: linear-gradient(135deg,#3b82f6,#2563eb);
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-calculate:hover{
+            transform: scale(1.02);
+            background: linear-gradient(135deg,#2563eb,#1d4ed8);
+        }
+
+        .result-table{
+            margin-top: 30px;
+        }
+
+        table{
+            color: white !important;
+        }
+
+        .table thead{
+            background: rgba(255,255,255,0.15);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+
+        <div class="container">
+
+            <a class="navbar-brand fw-bold" href="/">
+                RKF45
+            </a>
+
+            <div class="navbar-nav ms-auto">
+
+                <a class="nav-link px-3" href="/">
+                    Home
+                </a>
+
+                <a class="nav-link px-3" href="/theory">
+                    Theory
+                </a>
+
+                <a class="nav-link px-3" href="/examples">
+                    Examples
+                </a>
+
+                <a class="nav-link active px-3" href="/calculator">
+                    Calculator
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- CALCULATOR -->
+
+    <div class="d-flex justify-content-center">
+
+        <div class="calculator-card">
+
+            <h1 class="title">
+                RKF45 Calculator
+            </h1>
+
+            <p class="subtitle">
+                Runge–Kutta–Fehlberg Method for Solving Initial Value Problems
+            </p>
+
+            <div class="equation-box">
+
+                $$
+                \frac{dy}{dx}=f(x,y)
+                $$
+
+            </div>
+
+            <form method="POST">
+
+                <div class="row g-4">
+
+                    <div class="col-md-12">
+
+                        <label class="form-label">
+                            Differential Equation
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="equation"
+                            placeholder="Example: x + y"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Initial x₀
+                        </label>
+
+                        <input
+                            type="number"
+                            step="any"
+                            class="form-control"
+                            name="x0"
+                            placeholder="0"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Initial y₀
+                        </label>
+
+                        <input
+                            type="number"
+                            step="any"
+                            class="form-control"
+                            name="y0"
+                            placeholder="1"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Step Size (h)
+                        </label>
+
+                        <input
+                            type="number"
+                            step="any"
+                            class="form-control"
+                            name="h"
+                            placeholder="0.1"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Final x
+                        </label>
+
+                        <input
+                            type="number"
+                            step="any"
+                            class="form-control"
+                            name="xn"
+                            placeholder="1"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-12">
+
+                        <button type="submit"
+                                class="btn btn-primary btn-calculate">
+
+                            Calculate RKF45
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+            {% if results %}
+
+            <div class="result-table">
+
+                <h3 class="mt-5 mb-3">
+                    Results
+                </h3>
+
+                <div class="table-responsive">
+
+                    <table class="table table-dark table-hover table-bordered align-middle">
+
+                        <thead>
+
+                            <tr>
+                                <th>Iteration</th>
+                                <th>x</th>
+                                <th>4th Order</th>
+                                <th>5th Order</th>
+                                <th>Error</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for row in results %}
+
+                            <tr>
+
+                                <td>{{ loop.index }}</td>
+                                <td>{{ row.x }}</td>
+                                <td>{{ row.y4 }}</td>
+                                <td>{{ row.y5 }}</td>
+                                <td>{{ row.error }}</td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

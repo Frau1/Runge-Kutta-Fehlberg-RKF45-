@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RKF45 Theory</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <style>
+
+        body{
+            background: #0f172a;
+            color: white;
+            font-family: Poppins;
+            padding: 50px;
+        }
+
+        .card-custom{
+            background: rgba(255,255,255,0.06);
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 class="mb-4">RKF45 Theory</h1>
+
+    <div class="card-custom">
+
+        <h3>Initial Value Problem</h3>
+
+        <p>
+
+        $$
+        \frac{dy}{dx}=f(x,y)
+        $$
+
+        </p>
+
+        <p>
+            The Runge–Kutta–Fehlberg Method is an adaptive numerical method
+            used to solve ordinary differential equations.
+        </p>
+
+        <h3 class="mt-5">Error Formula</h3>
+
+        <p>
+
+        $$
+        E=|y_{n+1}^{(5)}-y_{n+1}^{(4)}|
+        $$
+
+        </p>
+
+        <h3 class="mt-5">Step Size Formula</h3>
+
+        <p>
+
+        $$
+        h_{new}=0.84h\left(\frac{Tolerance}{E}\right)^{1/4}
+        $$
+
+        </p>
+
+        <h3 class="mt-5">Advantages</h3>
+
+        <ul>
+            <li>High accuracy</li>
+            <li>Automatic error control</li>
+            <li>Adaptive step size</li>
+            <li>Efficient computation</li>
+        </ul>
+
+    </div>
+
+</div>
+
+</body>
+<nav class="navbar navbar-expand-lg navbar-dark mb-5">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">
+            RKF45
+        </a>
+
+        <div class="navbar-nav ms-auto">
+
+            <a class="nav-link px-3" href="/">
+                Home
+            </a>
+
+            <a class="nav-link px-3" href="/theory">
+                Theory
+            </a>
+
+            <a class="nav-link px-3" href="/examples">
+                Examples
+            </a>
+
+            <a class="nav-link px-3" href="/calculator">
+                Calculator
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+</html>

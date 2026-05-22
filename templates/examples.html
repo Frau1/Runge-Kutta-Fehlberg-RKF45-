@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RKF45 Worked Examples</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <style>
+
+        body{
+            background: #0f172a;
+            color: white;
+            font-family: Poppins;
+            padding: 40px;
+        }
+
+        .example-card{
+            background: rgba(255,255,255,0.06);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+
+        h1,h2,h3{
+            font-weight: 700;
+        }
+
+        .math-box{
+            background: rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 class="mb-5 text-center">
+        RKF45 Worked Examples
+    </h1>
+
+    <!-- EXAMPLE 1 -->
+
+    <div class="example-card">
+
+        <h2>Example 1</h2>
+
+        <p>Solve the initial value problem:</p>
+
+        <div class="math-box">
+
+        $$
+        \frac{dy}{dx}=x+y
+        $$
+
+        $$
+        y(0)=1
+        $$
+
+        with step size:
+
+        $$
+        h=0.1
+        $$
+
+        </div>
+
+        <h3>Step 1: Compute \(k_1\)</h3>
+
+        <div class="math-box">
+
+        $$
+        k_1=h f(x_n,y_n)
+        $$
+
+        $$
+        k_1=0.1(0+1)
+        $$
+
+        $$
+        k_1=0.1
+        $$
+
+        </div>
+
+        <h3>Step 2: Compute \(k_2\)</h3>
+
+        <div class="math-box">
+
+        $$
+        k_2=h f\left(x+\frac{h}{4},y+\frac{k_1}{4}\right)
+        $$
+
+        $$
+        k_2=0.1[(0+0.025)+(1+0.025)]
+        $$
+
+        $$
+        k_2=0.105
+        $$
+
+        </div>
+
+        <h3>Step 3: Compute \(k_3\)</h3>
+
+        <div class="math-box">
+
+        $$
+        k_3=0.1(0.0375+1.03906)
+        $$
+
+        $$
+        k_3=0.10766
+        $$
+
+        </div>
+
+        <h3>Step 4: Compute \(k_4\)</h3>
+
+        <div class="math-box">
+
+        $$
+        k_4=0.1(0.0923+1.0965)
+        $$
+
+        $$
+        k_4=0.11888
+        $$
+
+        </div>
+
+        <h3>Step 5: Compute \(k_5\)</h3>
+
+        <div class="math-box">
+
+        $$
+        k_5=0.1(0.1+1.1101)
+        $$
+
+        $$
+        k_5=0.12101
+        $$
+
+        </div>
+
+        <h3>Step 6: Compute \(k_6\)</h3>
+
+        <div class="math-box">
+
+        $$
+        k_6=0.1(0.05+1.0532)
+        $$
+
+        $$
+        k_6=0.11032
+        $$
+
+        </div>
+
+        <h3>Step 7: Compute 4th Order Approximation</h3>
+
+        <div class="math-box">
+
+        $$
+        y_{n+1}^{(4)}
+        =
+        y_n+\frac{25k_1}{216}
+        +\frac{1408k_3}{2565}
+        +\frac{2197k_4}{4104}
+        -\frac{k_5}{5}
+        $$
+
+        $$
+        y_{n+1}^{(4)}=1.11034
+        $$
+
+        </div>
+
+        <h3>Step 8: Compute 5th Order Approximation</h3>
+
+        <div class="math-box">
+
+        $$
+        y_{n+1}^{(5)}
+        =
+        y_n+\frac{16k_1}{135}
+        +\frac{6656k_3}{12825}
+        +\frac{28561k_4}{56430}
+        -\frac{9k_5}{50}
+        +\frac{2k_6}{55}
+        $$
+
+        $$
+        y_{n+1}^{(5)}=1.11036
+        $$
+
+        </div>
+
+        <h3>Step 9: Error Estimate</h3>
+
+        <div class="math-box">
+
+        $$
+        E=
+        |y_{n+1}^{(5)}-y_{n+1}^{(4)}|
+        $$
+
+        $$
+        E=|1.11036-1.11034|
+        $$
+
+        $$
+        E=0.00002
+        $$
+
+        </div>
+
+    </div>
+
+    <!-- EXAMPLE 2 -->
+
+    <div class="example-card">
+
+        <h2>Example 2</h2>
+
+        <p>Solve:</p>
+
+        <div class="math-box">
+
+        $$
+        \frac{dy}{dx}=y-x^2+1
+        $$
+
+        $$
+        y(0)=0.5
+        $$
+
+        </div>
+
+        <h3>Step 1: Compute \(k_1\)</h3>
+
+        <div class="math-box">
+
+        $$
+        k_1=0.1(0.5-0^2+1)
+        $$
+
+        $$
+        k_1=0.15
+        $$
+
+        </div>
+
+        <h3>Step 2: Compute \(k_2\)</h3>
+
+        <div class="math-box">
+
+        $$
+        k_2=0.1(0.5375-0.025^2+1)
+        $$
+
+        $$
+        k_2=0.15369
+        $$
+
+        </div>
+
+        <h3>Step 3: Compute \(k_3\)</h3>
+
+        <div class="math-box">
+
+        $$
+        k_3=0.15608
+        $$
+
+        </div>
+
+        <h3>Step 4: Compute \(k_4\)</h3>
+
+        <div class="math-box">
+
+        $$
+        k_4=0.16574
+        $$
+
+        </div>
+
+        <h3>Step 5: Compute Final RKF45 Solution</h3>
+
+        <div class="math-box">
+
+        $$
+        y_{n+1}^{(5)}=0.65741
+        $$
+
+        </div>
+
+        <h3>Step 6: Error Estimate</h3>
+
+        <div class="math-box">
+
+        $$
+        E=0.00003
+        $$
+
+        </div>
+
+        <h3>Final Answer</h3>
+
+        <div class="math-box">
+
+        $$
+        y(0.1)\approx0.65741
+        $$
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+<nav class="navbar navbar-expand-lg navbar-dark mb-5">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">
+            RKF45
+        </a>
+
+        <div class="navbar-nav ms-auto">
+
+            <a class="nav-link px-3" href="/">
+                Home
+            </a>
+
+            <a class="nav-link px-3" href="/theory">
+                Theory
+            </a>
+
+            <a class="nav-link px-3" href="/examples">
+                Examples
+            </a>
+
+            <a class="nav-link px-3" href="/calculator">
+                Calculator
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+</html>
